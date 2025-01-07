@@ -1,0 +1,95 @@
+/* App container - wraps the entire page */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure it takes the full height of the page */
+  background: linear-gradient(135deg, #7e7f90, #a9a9ad);
+}
+
+/* Content container - takes up available space between the header and footer */
+.content-container {
+  flex-grow: 1; /* This ensures the content takes up all available space */
+  padding-bottom: 80px; /* Add padding to avoid footer overlap */
+}
+
+
+/* Footer container */
+.footer-container {
+ 
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  margin-top: auto; /* Ensures the footer stays at the bottom */
+}
+
+/* Footer styling */
+.footer {
+  background-color: rgb(57, 62, 98);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer logo section */
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.footer-logo-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.footer-logo-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Footer navigation links */
+.footer-nav {
+  margin-bottom: 20px;
+}
+
+.footer-nav a {
+  color: #f6f5f5;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 15px;
+  font-size: 1.1rem;
+  transition: color 0.3s;
+}
+
+.footer-nav a:hover {
+  color: #e67e22;
+}
+
+/* Footer info (copyright & contact) */
+.footer-info {
+  font-size: 0.9rem;
+  color: #f8f6f2;
+}
+
+.footer-info p {
+  margin: 5px 0;
+}
+
+.footer-info a {
+  color: #fbfaf8;
+  text-decoration: none;
+}
+
+.footer-info a:hover {
+  color: #e67e22;
+}

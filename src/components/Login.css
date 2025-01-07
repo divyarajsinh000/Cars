@@ -1,0 +1,72 @@
+/* General Container Styling */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #7e7f90, #a9a9ad);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Form Card Styling */
+.form-card {
+    background: #fff;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 350px;
+}
+
+/* Form Heading */
+h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Input Field Styling */
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Button Styling */
+.btn {
+    background: #4e54c8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background: #3a40a6;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .form-card {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .input-field {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+}

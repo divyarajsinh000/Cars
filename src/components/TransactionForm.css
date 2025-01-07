@@ -1,0 +1,93 @@
+/* Fullscreen container */
+.transaction-form-fullscreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #212121; /* Dark background */
+    font-family: 'Arial', sans-serif;
+    position: relative; /* For the back button */
+}
+
+/* Back button in the top-left corner */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #f39c12; /* Gold color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #e67e22; /* Slightly darker gold on hover */
+}
+
+/* Centered form */
+.transaction-form {
+    width: 100%;
+    max-width: 400px; /* Limit form width */
+    background-color: black; /* Black background for the form */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Heading */
+.transaction-form h2 {
+    margin-bottom: 20px;
+    text-align: center;
+    color: #f39c12; /* Gold color */
+}
+
+/* Form group styles */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #f39c12; /* Gold for labels */
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+    background-color: #2c3e50; /* Dark gray background for inputs */
+    color: white; /* White text color */
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #f39c12; /* Gold border on focus */
+    outline: none;
+}
+
+/* Submit button */
+.submit-button {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #f39c12; /* Gold background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #e67e22; /* Darker gold on hover */
+}

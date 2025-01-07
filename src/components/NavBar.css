@@ -1,0 +1,92 @@
+.dashboard-container {
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background: linear-gradient(180deg, #000, #000, #000); */
+    /* background: radial-gradient(circle, #a2b9bc, #3498db, #8e44ad); */
+    /* background: repeating-radial-gradient(circle, hsl(51, 69%, 51%), hsl(51, 69%, 51%), hsl(51, 69%, 51%) 30%); */
+    background-color: rgb(57, 62, 98) ;
+
+
+
+
+
+
+    /* Gradient for a modern touch */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+   
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid white; /* White border for contrast */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.logo-image:hover {
+    transform: scale(1.1); /* Slight scale for hover effect */
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7); /* Golden glow on hover */
+}
+
+.logo-text {
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    letter-spacing: 2px;
+    font-family: 'Roboto', sans-serif; /* A more modern font */
+}
+
+.navbar nav {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar nav a {
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: capitalize; /* Capitalizes each link text */
+    transition: color 0.3s, transform 0.2s;
+}
+
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .logo-text {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .navbar nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar nav a {
+        font-size: 16px;
+    }
+}
