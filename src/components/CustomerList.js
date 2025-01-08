@@ -51,12 +51,19 @@ useEffect(() => {
             console.error('Error fetching customer data:', err);
         });
 }, [handleDeleteCustomer,handleEditSubmit]);
-     const exportToExcelcustomers = () => {
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(customers);
-        XLSX.utils.book_append_sheet(wb, ws, 'customers');
-        XLSX.writeFile(wb, 'customers.xlsx');
-    };
+const exportToExceltransactions = () => {
+    const formattedData = customers.map((transaction) => ({
+        CustomerId: transaction.CustomerId,
+        CustomerName: transaction.CustomerName || '', // Flatten CustomerName
+         MobileNo: transaction.Customer?.MobileNo || ''// Flatten CustomerName
+    }));
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(formattedData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Customer Report');
+    XLSX.writeFile(wb, 'customer.xlsx');
+};
+
     return (
         <div className="table-container">
         <h2>Customers</h2>
@@ -82,7 +89,7 @@ useEffect(() => {
                             <td>
                             <button onClick={() => handleEdit(customer)}>Edit</button>
                                 <button onClick={() => handleDeleteCustomer(customer.CustomerId)}>Delete</button>
-                                <button className="export-button" onClick={exportToExcelcustomers}>
+                                <button className="export-button" onClick={exportToExceltransactions}>
         Export to Excel
     </button>
                             </td>

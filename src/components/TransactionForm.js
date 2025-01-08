@@ -5,7 +5,7 @@ import './TransactionForm.css';
 
 function TransactionForm() {
     const [customers, setCustomers] = useState([]);
-    const [formData, setFormData] = useState({ CustomerId: '', VehicleNo: '', OperationDate: '',Price: '' });
+    const [formData, setFormData] = useState({ CustomerId: '', VehicleNo: '', OperationDate: '',Price: '',VehicleType:'' });
     const navigate = useNavigate();
     
    
@@ -22,7 +22,7 @@ function TransactionForm() {
             await axios.post('https://exciting-art-production.up.railway.app/transactions', formData);
             alert('Transaction added successfully!');
             navigate('/transactionlist')
-            setFormData({ CustomerId: '', VehicleNo: '', OperationDate: '' }); // Reset form
+            setFormData({ CustomerId: '', VehicleNo: '', OperationDate: '',Price: '',VehicleType:'' }); // Reset form
         } catch (error) {
             console.error(error);
             alert('Failed to add transaction.');
@@ -76,6 +76,17 @@ function TransactionForm() {
                                     placeholder="Enter Price"
                                     value={formData.Price}
                                     onChange={(e) => setFormData({ ...formData, Price: e.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="VehicleType">VehicleType</label>
+                                <input
+                                    type="text"
+                                    id="VehicleType"
+                                    placeholder="Enter VehicleType"
+                                    value={formData.VehicleType}
+                                    onChange={(e) => setFormData({ ...formData, VehicleType: e.target.value })}
                                     required
                                 />
                             </div>

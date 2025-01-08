@@ -6,12 +6,14 @@ import * as XLSX from 'xlsx';
 function TransactionList() {
     const [transactions, setTransactions] = useState([]);
     const [customers, setCustomers] = useState([]);
+    const [filters, setFilters] = useState({ fromDate: '', toDate: '', customerId: '',price:'',vehicleType:'' });
     const [formData, setFormData] = useState({
         TransactionId: '',
         CustomerId: '',
         VehicleNo: '',
         OperationDate: '',
         Price: '',
+        VehicleType: '',
     });
     // Fetch transactions on page load
    
@@ -21,6 +23,7 @@ function TransactionList() {
             CustomerId: transaction.CustomerId,
             VehicleNo: transaction.VehicleNo,
             Price: transaction.Price,
+            VehicleType: transaction.VehicleType,
             OperationDate: new Date(transaction.OperationDate).toISOString().split('T')[0] // Set the date in YYYY-MM-DD format
         });
     };
@@ -34,7 +37,8 @@ function TransactionList() {
             TransactionId: '',
             CustomerId: '',
             VehicleNo: '',
-            Price: '',            OperationDate: ''
+            Price: '',     
+            VehicleType: '' ,      OperationDate: ''
         }); // Reset form data
     } catch (error) {
         console.error(error);
@@ -52,12 +56,43 @@ const handleDeleteTransaction = useCallback((id) => {
             alert('Failed to delete transaction');
         });
 },[]);
-  const exportToExceltransactions = () => {
-        const wb = XLSX.utils.book_new();
-        const ws = XLSX.utils.json_to_sheet(transactions);
-        XLSX.utils.book_append_sheet(wb, ws, 'transactions');
-        XLSX.writeFile(wb, 'transactions.xlsx');
-    };
+const exportToExceltransactions = () => {
+    const formattedData = transactions.map((transaction) => ({
+        TransactionId: transaction.TransactionId,
+        VehicleNo: transaction.VehicleNo,
+        OperationDate: transaction.OperationDate,
+        VehicleType: transaction.VehicleType,
+        Price: transaction.Price,
+        CustomerName: transaction.Customer?.CustomerName || '', // Flatten CustomerName
+        // MobileNo: transaction.Customer?.MobileNo || '' // Include MobileNo if required
+    }));
+
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(formattedData);
+    XLSX.utils.book_append_sheet(wb, ws, 'Transaction Report');
+    XLSX.writeFile(wb, 'transaction_report.xlsx');
+};
+const fetchReport = async () => {
+    try {
+        const res = await axios.get('https://exciting-art-production.up.railway.app/transactions/filter', { params: filters });
+        setTransactions(res.data);
+    } catch (error) {
+        console.error(error);
+        alert('Failed to fetch transaction.');
+    }
+};
+const fetchTransaction = async () => {
+    setFilters({
+        fromDate: '', toDate: '', customerId: '',price:'',vehicleType:''
+    })
+    try {
+        const res = await axios.get('https://exciting-art-production.up.railway.app/transactions');
+        setTransactions(res.data);
+    } catch (error) {
+        console.error(error);
+        alert('Failed to fetch transaction.');
+    }
+};
 useEffect(() => {
     axios.get('https://exciting-art-production.up.railway.app/customers')
     .then((res) => {
@@ -80,6 +115,70 @@ useEffect(() => {
                 {/* Transactions Table */}
                 <div className="table-container">
                     <h2>Transactions</h2>
+                    <div className="filters">
+                <div className="form-group">
+                    <label htmlFor="fromDate">From Date</label>
+                    <input
+                        type="date"
+                        id="fromDate"
+                        value={filters.fromDate}
+                        onChange={(e) => setFilters({ ...filters, fromDate: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="toDate">To Date</label>
+                    <input
+                        type="date"
+                        id="toDate"
+                        value={filters.toDate}
+                        onChange={(e) => setFilters({ ...filters, toDate: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                        <label htmlFor="price">Price</label>
+                        <input
+                            type="text"
+                            id="price"
+                            value={filters.price}
+                            onChange={(e) => setFilters({ ...filters, price: e.target.value })}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="vehicleType">vehicleType</label>
+                        <input
+                            type="text"
+                            id="vehicleType"
+                            value={filters.vehicleType}
+                            onChange={(e) => setFilters({ ...filters, vehicleType: e.target.value })}
+                            required
+                        />
+                    </div>
+                <div className="form-group">
+                                <label htmlFor="CustomerId">Select Customer</label>
+                                <select
+                                    id="CustomerId"
+                                    value={filters.customerId}
+                                    onChange={(e) => setFilters({ ...filters, customerId: e.target.value })}
+                                    required
+                                >
+                                    <option value="">Select Customer</option>
+                                    {customers.map((customer) => (
+                                        <option key={customer.CustomerId} value={customer.CustomerId}>
+                                            {customer.CustomerName}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+              
+                <button className="generate-button" onClick={fetchReport}>
+                    Filter Data
+                </button>
+                <button className="generate-button" onClick={fetchTransaction}>
+                    Reset Filters
+                </button>
+ 
+            </div>
                     <Link to="/add-transaction">
                 <button className="dashboard-button">Add Transaction</button>
             </Link>
@@ -90,6 +189,7 @@ useEffect(() => {
                                 <th>Customer Name</th>
                                 <th>Vehicle No</th>
                                 <th>Price</th>
+                                <th>VehicleType</th>
                                 <th>Operation Date</th>
                                 <th>Actions</th>
                             </tr>
@@ -99,9 +199,10 @@ useEffect(() => {
                                 transactions.map((transaction) => (
                                     <tr key={transaction.TransactionId}>
                                         <td>{transaction.TransactionId}</td>
-                                        <td>{transaction.CustomerName }</td>
+                                        <td>{transaction.Customer.CustomerName }</td>
                                         <td>{transaction.VehicleNo}</td>
                                         <td>{transaction.Price}</td>
+                                        <td>{transaction.VehicleType}</td>
                                         <td>{new Date(transaction.OperationDate).toLocaleDateString()}</td>
                                         <td>
                                             <button onClick={() => handleEditTranset(transaction)}>Edit</button>
@@ -172,6 +273,18 @@ useEffect(() => {
                             value={formData.Price}
                             onChange={(e) =>
                                 setFormData({ ...formData, Price: e.target.value })
+                            }
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="VehicleType">VehicleType:</label>
+                        <input
+                            type="text"
+                            id="VehicleType"
+                            value={formData.VehicleType}
+                            onChange={(e) =>
+                                setFormData({ ...formData, VehicleType: e.target.value })
                             }
                             required
                         />

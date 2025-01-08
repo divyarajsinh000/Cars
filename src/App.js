@@ -20,10 +20,16 @@ function App() {
             setIsLoggedIn(true);
         }
     }, []);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(() => {
+        return localStorage.getItem('isLoggedIn') === 'true';
+    });
     const handleLogout = () => {
         setIsLoggedIn(false); // Set logged out status
         localStorage.removeItem('isLoggedIn'); // Optional: Remove from localStorage if using persistence
+    };
+    const handleLogin = () => {
+        setIsLoggedIn(true); // Set logged in status
+        localStorage.setItem('isLoggedIn', 'true'); // Persist to localStorage
     };
     return (
         <Router>
@@ -32,7 +38,7 @@ function App() {
                 <div className="content-container">
                     <Routes>
                         {/* If not logged in, redirect to login page */}
-                        <Route path="/" element={isLoggedIn ? <Navigate to="/Dashboard" /> : <LoginWithOTP setIsLoggedIn={setIsLoggedIn} />} />
+                        <Route path="/" element={isLoggedIn ? <Navigate to="/Dashboard" /> : <LoginWithOTP setIsLoggedIn={handleLogin} />} />
 
                         {/* Restricted routes */}
                         <Route path="/customers/edit/:customerId" element={isLoggedIn ? <EditCustomerForm /> : <Navigate to="/" />} />

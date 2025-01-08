@@ -24,11 +24,22 @@ function Report() {
     }, []);
  // Export the report to Excel
  const exportToExcel = () => {
+    const formattedData = report.map((transaction) => ({
+        TransactionId: transaction.TransactionId,
+        VehicleNo: transaction.VehicleNo,
+        OperationDate: transaction.OperationDate,
+        VehicleType: transaction.VehicleType,
+        Price: transaction.Price,
+        CustomerName: transaction.Customer?.CustomerName || '', // Flatten CustomerName
+        MobileNo: transaction.Customer?.MobileNo || '' // Include MobileNo if required
+    }));
+
     const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(report);
+    const ws = XLSX.utils.json_to_sheet(formattedData);
     XLSX.utils.book_append_sheet(wb, ws, 'Transaction Report');
     XLSX.writeFile(wb, 'transaction_report.xlsx');
 };
+
     return (
         <div className="report-container">
             <h2>Transaction Report</h2>
