@@ -2,8 +2,7 @@
 .app-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure it takes the full height of the page */
-  background: linear-gradient(135deg, #7e7f90, #a9a9ad);
+  min-height: 100vh; 
 }
 
 /* Content container - takes up available space between the header and footer */

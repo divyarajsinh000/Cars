@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './CustomerForm.css';
 
-function CustomerForm() {
+function CustomerForm({ isLoggedIn, handleLogout }) {
     const [formData, setFormData] = useState({ CustomerName: '', MobileNo: '' });
     const navigate = useNavigate();
 
@@ -13,6 +13,7 @@ function CustomerForm() {
             await axios.post('https://exciting-art-production.up.railway.app/customers', formData);
             alert('Customer added successfully!');
             setFormData({ CustomerName: '', MobileNo: '' }); // Reset form
+            navigate('/customerlist');
         } catch (error) {
             console.error(error);
             alert('Failed to add customer.');
@@ -20,61 +21,69 @@ function CustomerForm() {
     };
 
     return (
-        <div className="modal-overlay">
-    <div className="modal-content">
-    <div className="modal-header">
-    <h2>Add New Customer</h2>
-                        <button className="close-btn" onClick={() => navigate(-1)}>
-                            &times;
-                        </button>
-                    </div>
-      
-        <form onSubmit={handleSubmit}>
+        <><div class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    {/* <img src="car-icon.png" alt="Car" class="logo-icon"> */}
+                    <span class="logo-text">Auto Mobile</span>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                
+                <a href="/Dashboard" class="sidebar-link">Dashboard</a>
+                <a href="/customerlist" class="sidebar-link">Customer</a>
+                <a href="/transactionlist" class="sidebar-link">Transaction</a>
+                <a href="/report" class="sidebar-link">Reports</a>
+            </nav>
+        </div>
+        <div className="main-content">
+          <header className="top-nav">
+            <h1 className="page-title">VIP AUTOMATED VEHICLE FITNESS TESTING CENTER</h1>
+            <div className="user-info">
+         
+          
+         {isLoggedIn && (
+         <button className="user-details" onClick={handleLogout}>
+       
 
-            <div className="form-group">
-                <label htmlFor="CustomerName">Customer Name</label>
-                <input
-                    type="text"
-                    id="CustomerName"
-                    placeholder="Enter customer name"
-                    value={formData.CustomerName}
-                    onChange={(e) =>
-                        setFormData({ ...formData, CustomerName: e.target.value })
-                    }
-                    required
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="MobileNo">Mobile Number</label>
-                <input
-                    type="text"
-                    id="MobileNo"
-                    placeholder="Enter mobile number"
-                    value={formData.MobileNo}
-                    onChange={(e) =>
-                        setFormData({ ...formData, MobileNo: e.target.value })
-                    }
-                    required
-                />
-            </div>
-            {/* <button type="submit" className="submit-button">
-                Add Customer
-            </button> */}
-            <div className="modal-footer">
-                            <button type="submit" className="save-btn">
-                                Add Transaction
-                            </button>
-                            <button
-                                type="button"
-                                className="cancel-btn"
-                                onClick={() => navigate(-1)}
-                            >
-                                Cancel
-                            </button>
-                        </div>
-        </form>
-    </div>
-</div>
+     Logout
+         </button>
+     )}
+ 
+     </div>
+          </header>
+          <main className="dashboard-content">
+        
+            
+            {/* <div className="card"> */}
+            <form onSubmit={handleSubmit} className="customer-form">
+              <h2 className="text-white text-center text-2xl font-bold mb-4">Add Customer</h2>
+              <label htmlFor="CustomerName" >Customer Name</label>
+              <input
+                className="input-field"
+                type="text"
+                placeholder="Enter customer name"
+                                value={formData.CustomerName}
+                                onChange={(e) => setFormData({ ...formData, CustomerName: e.target.value })}
+              />
+              <label htmlFor="MobileNo">Mobile Number</label>
+              <input
+                className="input-field"
+                type="text"
+                id="MobileNo"
+                                placeholder="Enter mobile number"
+                                value={formData.MobileNo}
+                                onChange={(e) => setFormData({ ...formData, MobileNo: e.target.value })}
+              />
+              <button className="btn" type="submit" >Submit</button>
+            {/* </div> */}
+            </form>
+           
+      
+          
+          </main>
+        </div>
+        </>
 
     );
 }

@@ -18,7 +18,7 @@ const Footer = () => {
           <a href="/report">Report</a>
         </nav>
         <div className="footer-info">
-          <p>&copy; 2024 VIP Automated Vehicle Fitness Testing Center. All rights reserved.</p>
+          <p>&copy; 2025 VIP Automated Vehicle Fitness Testing Center. All rights reserved.</p>
           <p>Contact us: <a href="mailto:contact@viptestingcenter.com">contact@viptestingcenter.com</a></p>
         </div>
       </footer>

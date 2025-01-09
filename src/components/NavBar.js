@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
-import logo from "../assests/logo.jpg";
 
 const Navbar = ({ isLoggedIn, handleLogout }) => {
   return (
@@ -9,7 +8,7 @@ const Navbar = ({ isLoggedIn, handleLogout }) => {
       <header className="navbar">
         {/* Logo Section */}
         <div className="logo">
-          <img src={logo} alt="Logo" className="logo-image" />
+          {/* <img src={logo} alt="Logo" className="logo-image" /> */}
           <span className="logo-text">
             VIP AUTOMATED VEHICLE FITNESS TESTING CENTER
           </span>

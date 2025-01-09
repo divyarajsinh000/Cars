@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import './Report.css';
 import * as XLSX from 'xlsx'; 
-function Report() {
+function Report({ isLoggedIn, handleLogout }) {
     const [filters, setFilters] = useState({ fromDate: '', toDate: '', customerId: '' });
     const [report, setReport] = useState([]);
     const [customers, setCustomers] = useState([]);
@@ -41,28 +41,57 @@ function Report() {
 };
 
     return (
-        <div className="report-container">
-            <h2>Transaction Report</h2>
-            <div className="filters">
-                <div className="form-group">
-                    <label htmlFor="fromDate">From Date</label>
-                    <input
-                        type="date"
-                        id="fromDate"
-                        value={filters.fromDate}
-                        onChange={(e) => setFilters({ ...filters, fromDate: e.target.value })}
-                    />
+        <><div className="sidebar">
+            <div className="sidebar-header">
+                <div className="logo">
+                <span class="logo-text">Auto Mobile</span>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="toDate">To Date</label>
-                    <input
-                        type="date"
-                        id="toDate"
-                        value={filters.toDate}
-                        onChange={(e) => setFilters({ ...filters, toDate: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
+            </div>
+            <nav class="sidebar-nav">
+                
+                <a href="/Dashboard" class="sidebar-link">Dashboard</a>
+                <a href="/customerlist" class="sidebar-link">Customer</a>
+                <a href="/transactionlist" class="sidebar-link">Transaction</a>
+                <a href="/report" class="sidebar-link">Reports</a>
+            </nav>
+        </div><div className="main-content">
+                <header className="top-nav">
+                    <h1 className="page-title">VIP AUTOMATED VEHICLE FITNESS TESTING CENTER</h1>
+                    <div className="user-info">
+         
+          
+                {isLoggedIn && (
+                <button className="user-details" onClick={handleLogout}>
+              
+  
+            Logout
+                </button>
+            )}
+        
+            </div>
+                </header>
+
+                <main className="dashboard-content">
+                    {/* <div className="report-container"> */}
+                        <h2>Transaction Report</h2>
+                        <div className="filters">
+                            <div className="form-group">
+                                <label htmlFor="fromDate">From Date</label>
+                                <input
+                                    type="date"
+                                    id="fromDate"
+                                    value={filters.fromDate}
+                                    onChange={(e) => setFilters({ ...filters, fromDate: e.target.value })} />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="toDate">To Date</label>
+                                <input
+                                    type="date"
+                                    id="toDate"
+                                    value={filters.toDate}
+                                    onChange={(e) => setFilters({ ...filters, toDate: e.target.value })} />
+                            </div>
+                            <div className="form-group">
                                 <label htmlFor="CustomerId">Select Customer</label>
                                 <select
                                     id="CustomerId"
@@ -78,47 +107,48 @@ function Report() {
                                     ))}
                                 </select>
                             </div>
-              
-                <button className="generate-button" onClick={fetchReport}>
-                    Generate Report
-                </button>
-                <button className="export-button" onClick={exportToExcel}>
-                    Export to Excel
-                </button>
-            </div>
 
-            <table className="report-table">
-                <thead>
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>Mobile No</th>
-                        <th>Vehicle No</th>
-                        <th>Operation Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {report.length > 0 ? (
-                        report.map((entry) => (
-                            <tr key={entry.TransactionId}>
-                                <td>{entry.Customer.CustomerName}</td>
-                                <td>{entry.Customer.MobileNo}</td>
-                                <td>{entry.VehicleNo}</td>
-                                <td>{new Date(entry.OperationDate).toLocaleDateString()}</td>
-                                
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan="3" className="no-data">
-                                No data available
-                            </td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
-             {/* Edit Customer Form */}
-            
-        </div>
+                            <button className="generate-button" onClick={fetchReport}>
+                                Generate Report
+                            </button>
+                            <button className="export-button" onClick={exportToExcel}>
+                                Export to Excel
+                            </button>
+                        </div>
+
+                        <table className="dashboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Vehicle No</th>
+                                    <th>Operation Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {report.length > 0 ? (
+                                    report.map((entry) => (
+                                        <tr key={entry.TransactionId}>
+                                        <td>{entry.Customer && entry.Customer.CustomerName ? entry.Customer.CustomerName : 'No Name Available'}</td>
+
+                                            <td>{entry.VehicleType}</td>
+                                            <td>{entry.VehicleNo}</td>
+                                            <td>{new Date(entry.OperationDate).toLocaleDateString()}</td>
+
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="3" className="no-data">
+                                            No data available
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                        {/* Edit Customer Form */}
+
+                   </main></div></>
     );
 }
 

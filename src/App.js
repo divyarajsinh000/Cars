@@ -10,6 +10,7 @@ import CustomerList from './components/CustomerList';
 import TransactionList from './components/TransactionList';
 import Footer from './components/Footer';
 import LoginWithOTP from './components/Login';
+import EdittransactionForm from './components/EditTrasactionsForm';
 
 function App() {
 
@@ -34,23 +35,24 @@ function App() {
     return (
         <Router>
             <div className="app-container">
-                <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout}/>
+                {/* <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> */}
                 <div className="content-container">
                     <Routes>
                         {/* If not logged in, redirect to login page */}
                         <Route path="/" element={isLoggedIn ? <Navigate to="/Dashboard" /> : <LoginWithOTP setIsLoggedIn={handleLogin} />} />
 
                         {/* Restricted routes */}
-                        <Route path="/customers/edit/:customerId" element={isLoggedIn ? <EditCustomerForm /> : <Navigate to="/" />} />
-                        <Route path="/add-customer" element={isLoggedIn ? <CustomerForm /> : <Navigate to="/" />} />
-                        <Route path="/Dashboard" element={isLoggedIn ? <Dashboard /> : <Navigate to="/" />} />
-                        <Route path="/add-transaction" element={isLoggedIn ? <TransactionForm /> : <Navigate to="/" />} />
-                        <Route path="/customerlist" element={isLoggedIn ? <CustomerList /> : <Navigate to="/" />} />
-                        <Route path="/transactionlist" element={isLoggedIn ? <TransactionList /> : <Navigate to="/" />} />
-                        <Route path="/report" element={isLoggedIn ? <Report /> : <Navigate to="/" />} />
+                        <Route path="/customers/edit/:customerId" element={isLoggedIn ? <EditCustomerForm isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
+                        <Route path="/transaction/edit/:transactionId" element={isLoggedIn ? <EdittransactionForm isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
+                        <Route path="/add-customer" element={isLoggedIn ? <CustomerForm isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
+                        <Route path="/Dashboard" element={isLoggedIn ? <Dashboard isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
+                        <Route path="/add-transaction" element={isLoggedIn ? <TransactionForm isLoggedIn={isLoggedIn} handleLogout={handleLogout} /> : <Navigate to="/" />} />
+                        <Route path="/customerlist" element={isLoggedIn ? <CustomerList isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
+                        <Route path="/transactionlist" element={isLoggedIn ? <TransactionList isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
+                        <Route path="/report" element={isLoggedIn ? <Report isLoggedIn={isLoggedIn} handleLogout={handleLogout}/> : <Navigate to="/" />} />
                     </Routes>
                 </div>
-                <Footer />
+                {/* <Footer /> */}
             </div>
         </Router>
     );
