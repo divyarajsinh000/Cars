@@ -8,10 +8,10 @@
   }
   
   .bg-image {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                      url('https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&q=80');
-    background-size: cover;
-    background-position: center;
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                      url('https://images.unsplash.com/photo-1487754180451-c456f719a1fc?auto=format&fit=crop&q=80'); */
+    /* background-size: cover;
+    background-position: center; */
   }
   
   /* Card styles */
